@@ -19,38 +19,44 @@ Before creating data quality Rules and Policies, you have to:
 
 ## Rules
 
-You can create Rules with the CEL expressions which capture business logic for your data. For example: `value.customerId.matches("[0-9]{8}")`.
+You can define three different types of Rules that will validate your Kafka message data quality:
+
+- [CEL (Common Expression Language) expression](#cel-expression-rules)
+- [Built-in](#built-in-rules)
+- [JSON schema](#json-schema-rule)
 
 <Info>
-Rules do nothing on their own - you **have to** to attach them to a Policy.
+Rules do nothing on their own - you **have to** attach them to a Policy.
 </Info>
 
-The Rules page lists your Rules with a preview of their CEL expressions. Open Rule's detail page to see its description, full CEL expression and attached Policies.
 
 ### Create a Rule
 
-You can create a data quality Rule using the Console UI or the Conduktor CLI.
+You can create a data quality Rule (CEL or JSON schema) using the Console UI or the Conduktor CLI.
 
 <Tabs>
-<Tab title="Console UI">
+  <Tab title="Console UI">
 
-To create a Rule using the Console UI:
+    To create a Rule using the Console UI:
 
-1. In the Trust section of the sidebar of Conduktor Console go to **Rules** and click **+New Rule**.
-1. Define the Rule details:
-   - Add a descriptive **name** for the Rule.
-   - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Rule in CLI/API.
-   - (Optional) Enter a **Description** to explain your Rule.
-1. Define the CEL expression for your Rule:
-   - Common Expression Language (CEL) is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. See [the CEL language definition](https://github.com/google/cel-spec/blob/master/doc/intro.md) for details.
-1. Click **Create**.
-</Tab>
+    1. Go to **Rules** and click **+New Rule**.
+    1. Define the Rule details:
+        - Add a descriptive **name** for the Rule.
+        - The **Technical ID** will be auto-populated as you type in the name. This is used to identify this Rule in CLI/API.
+        - (Optional) Enter a **Description** that explains the purpose of your Rule.
+    1. Select the Rule type (**CEL expression** or **JSON schema**) and provide the required logic:
+        - CEL is an expression language supporting common operators like `==` and `>` as well as macros like `has()` to check for the presence of fields. Use `matches()` to test regex patterns. [See the CEL language definition for details](https://github.com/google/cel-spec/blob/master/doc/intro.md). You can access a set of pre-built examples by clicking **Show regex library**. Click on the relevant example to copy it and paste into your Rule expression. You can then customize it further, as necessary.
+        - For JSON schema, enter your schema definition. [See the JSON schema specification for details](https://json-schema.org/specification).
+    1. Click **Create**.
+  </Tab>
 
-<Tab title="Conduktor CLI">
+  <Tab title="Conduktor CLI">
 
-You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a Rule:
+    You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to create a Rule:
 
-1. Save this example to file, e.g. `rule.yaml`:
+    1. Save your rule configuration to a file, e.g. `rule.yaml`.
+
+    Example for CEL:
 
     ```yaml
     apiVersion: v1
@@ -64,34 +70,46 @@ You can also use the [Conduktor CLI](/guide/conduktor-in-production/automate/cli
         type: Cel
     ```
 
-2. Use [the CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
+    Example for JSON Schema:
+
+    ```yaml
+    apiVersion: v1
+    kind: DataQualityRule
+    metadata:
+        name: valid-user
+    spec:
+        schema:
+          {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": ["name", "age"],
+            "properties": {
+              "name": { "type": "string" },
+              "age": { "type": "integer", "minimum": 0 },
+              "isActive": { "type": "boolean", "default": true }
+            }
+          }
+        displayName: valid user
+        description: check that the user is valid
+        type: JsonSchema
+    ```
+
+    2. [Use the CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
     ```bash
     conduktor apply -f rule.yaml
     ```
 
-</Tab>
+  </Tab>
 </Tabs>
 
-### Built-in Rules
+### CEL expression Rules
 
-We provide built-in validation Rules that can't be achieved with CEL.
+You can create Rules with CEL expressions that capture business logic of your data. For example: `value.customerId.matches("[0-9]{8}")`.
 
-<Info>
-We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) schema registries.
-</Info>
+The Rules page lists your Rules with a preview of their CEL expressions. Open a Rule's detail page to see its description, full CEL expression and attached Policies.
 
-#### EnforceAvro
-
-`EnforceAvro` ensures that:
-
-- Your messages have a schema ID prepended to the message content.
-- The schema ID exists within your schema registry.
-- The schema it references is of type `avro`.
-
-### Sample Rules
-
-Here are some examples of data quality rules.
+#### Sample CEL Rules
 
 <Note>
 Make sure you amend these examples to use your values.
@@ -110,6 +128,102 @@ Make sure you amend these examples to use your values.
   </Accordion>
 </AccordionGroup>
 
+
+### Built-in Rules
+
+We provide built-in validation Rules that can't be achieved with CEL.
+
+<Info>
+We currently only support **Confluent** and **Confluent like** (e.g. Redpanda) schema registries.
+</Info>
+
+#### EnforceAvro
+
+`EnforceAvro` ensures that:
+
+- Your messages have a schema ID prepended to the message content.
+- The schema ID exists within your schema registry.
+- The schema it references is of type `avro`.
+
+### JSON schema Rule
+
+Enforce JSON Schema validation on Kafka messages to ensure data consistency and structure compliance.
+
+#### Configure JSON schema
+
+Add a JSON schema Rule using the CLI:
+
+```yaml
+apiVersion: v1
+kind: DataQualityRule
+metadata:
+    name: json
+spec:
+    schema:
+        {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "required": ["name", "age"],
+          "properties": {
+            "name": { "type": "string" },
+            "age": { "type": "integer", "minimum": 0 },
+            "isActive": { "type": "boolean", "default": true }
+          }
+        }
+    displayName: valid user
+    description: check that the user is valid
+    type: JsonSchema
+```
+
+#### Schema requirements
+
+- Has to conform to the [JSON schema specification](https://json-schema.org/specification)
+- If no `$schema` is specified, will default to [draft 2020-12](https://json-schema.org/draft/2020-12)
+
+#### Examples
+
+<AccordionGroup>
+  <Accordion title="Basic User Validation">
+    ```json
+    {
+      "type": "object",
+      "required": ["id", "name", "age"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "minLength": 1 },
+        "age": { "type": "integer", "minimum": 0 }
+      }
+    }
+    ```
+  </Accordion>
+  <Accordion title="Schema with Version">
+    ```json
+    {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    }
+    ```
+  </Accordion>
+  <Accordion title="No Additional Fields Allowed">
+    ```json
+    {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
 ## Policies
 
 A Policy is made up of Rules that are applied to topics/prefixes.
@@ -124,12 +238,53 @@ The Policies page lists your Policies with their actions and targets.
 
 The available actions to enable for a Policy are:
 
-- **Report**: when violations occur, log these as events in the Policy's history
-- **Block**: when a violation occurs, prevent data from being processed or transmitted
+- **Report**: when violations occur, log these as events in the Policy's history.
+- **Block**: when a violation occurs, prevent data from being processed or transmitted.
+- **Mark**: when a violation occurs, add a special header to the message so it can be identified and handled downstream. [Find out about how marking works](#mark-action).
 
 By default, Policies created using the Console UI don't have any actions enabled. You have to complete the Policy creation first and then enable the required actions. If there are any additional actions you'd like to see, [get in touch](https://support.conduktor.io/hc/en-gb/requests/new?ticket_form_id=17438365654417).
 
-### Create a Policy
+<Info>
+If both *Block* and *Mark* are enabled, **only blocking** will be applied: messages violating the Policy will be blocked entirely with no marking.
+</Info>
+
+#### Mark action
+
+When the **Mark** action is enabled, messages that violate the Rule(s) are tagged with a special header:
+
+- **Header name:** `conduktor.dataquality.violations`
+- **Header value:** JSON object mapping policy names to arrays of failed rule names. For example:
+
+```json
+{
+  "policy-name": ["rule-1", "rule-2"],
+  "another-policy": ["rule-3"]
+}
+```
+
+### Violations metrics
+
+Monitor Rule violations to a Policy over the selected time range 30 minutes, 1 hour, 1 day or 7 days.
+
+#### Metrics displayed
+
+The page displays four types of metrics:
+
+- **Messages Evaluated Count** shows total messages checked against this policy
+- **Violations Count** shows total violations detected
+- **Violations Graph** is a bar chart showing past violations to help identify patterns and spikes
+- **Violations History** lists individual violation events showing when and where violations occurred
+
+#### Data freshness
+
+**Important**: There's a timing difference between the metrics:
+
+- **Violations History**: Updated almost immediately
+- **Messages Evaluated Count, Violations Count & Violations Graph**: May be delayed up to 1 minute
+
+This delay exists because these metrics are collected through our monitoring system (Cortex), which processes data in batches for performance. The violation history comes directly from the backend database. Due to this, the violations history can show recent violations that do not yet show up in the graph or counts.
+
+## Create a Policy
 
 You can create a data quality Policy using the Console UI or the Conduktor CLI.
 

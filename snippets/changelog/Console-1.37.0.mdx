@@ -1,0 +1,137 @@
+---
+title: Console 1.37
+---
+
+_Release date: 2025-08-21_
+
+- [Breaking changes](#breaking-changes)
+  - [Gateway 3.12 dependency](#gateway-3.12-dependency)
+  - [Email address storage](#email-address-storage)
+- [Conduktor Scale](#conduktor-scale)
+  - [Application Groups management](#application-groups-management)
+  - [Application Instance resources](#application-instance-resources)
+  - [Subject strategies support](#subject-strategies-support)
+  - [External group management improvements](#external-group-management-improvements)
+- [Conduktor Exchange](#conduktor-exchange)
+  - [Partner Zone out of preview](#partner-zone-out-of-preview)
+  - [Partner Zone multi-cluster support](#partner-zone-multi-cluster-support)
+  - [Partner Zone breaking change](#partner-zone-breaking-change)
+- [Conduktor Trust](#conduktor-trust)
+  - [Regex library](#regex-library)
+  - [Mark action](#mark-action)
+  - [JSON schema rule type](#json-schema-rule-type)
+- [Quality of life improvements](#quality-of-life-improvements)
+- [Fixes](#fixes)
+
+### Breaking changes
+
+#### Gateway 3.12 dependency
+
+Starting from Console 1.37, Conduktor Trust [Mark action](#mark-action) and Conduktor Exchange [Partner Zone](#partner-zone-breaking-change) functionality will require Gateway 3.12 or later.
+
+#### Email address storage
+
+In this release, we have made a change to how we store the email addresses of users in Console. All emails are now stored in lowercase to ensure consistency and prevent issues with SSO or RBAC. We highly recommend that you back up your Console database before upgrading to this version. If two users have the same email address but with different cases, the migration will fail. In this case, we recommend that you resolve the conflict by either deleting one of the users or changing their email address before upgrading.
+
+#### Prometheus configuration overrides
+
+Before Console v1.37.0, Prometheus configuration was overridden using the **replace** strategy. Since **v1.37.0** it's changed to the **patch** (YAML merging) strategy.
+
+Prometheus configuration can be **patched** by mounting a YAML file to path `/opt/override-configs/prometheus.yaml`. To set an alternative path, use the `PROMETHEUS_OVERRIDE_CONFIG_FILE` environment variable.
+
+### Conduktor Scale
+
+#### Application groups management
+
+New application group management in Self-service provides full lifecycle management through improved UI workflows.
+
+The **Members** tab offers an enhanced interface for managing group membership, making it easier for teams to control access and visibility. The **Resource access** tab enables granular control over topic, consumer group, subject, and connector permissions for precise access management. Application groups can also map to external groups like Console user groups for streamlined access management.
+
+#### Application Instance resources
+
+Application instances now feature comprehensive resource management capabilities. The new **Resources** tab provides a detailed view of all the resources associated with application instances, giving teams better visibility into their resource usage and dependencies.
+
+#### Subject strategies support
+
+Support for **Confluent subject strategies** has been added to the produce page for topics. This enhancement gives users more control over how schemas are referenced when producing messages, providing flexibility in schema organization and naming conventions.
+
+#### External Group management improvements
+
+The **External groups UI** has been enhanced for mapping external authentication groups, making it easier for administrators to configure and maintain user access patterns.
+
+Both the Console user groups and application groups now support **external group regex** functionality, enabling dynamic group assignment based on external authentication patterns. This allows organizations to automatically map users from identity providers to appropriate application groups, based on configurable regex patterns.
+
+### Conduktor Exchange
+
+#### Partner Zone out of preview
+
+Partner Zones are now generally available and out of preview. This means that all features are fully supported, production-ready, and can be used in production environments.
+
+#### Partner Zone multi-cluster support
+
+Console now supports creating Partner Zones against a multi-clustered Gateway configuration. This allows for a Partner Zone to be created against any of the configured Kafka clusters behind Gateway (previously, a Gateway was required per Kafka cluster for a Partner Zone).
+
+[Check out the tutorial on creating Partner Zones with multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster), as well as the [console resources for Partner Zones](/guide/reference/console-reference#partner-zones).
+
+#### Partner Zone breaking change
+
+With the multi-cluster support in Gateway 3.12, all existing Partner Zones created prior to this version of Console are incompatible and cannot be migrated or updated to support the new capability. Hence, existing Partner Zones will stop functioning after the upgrade if not recreated.
+
+**Action required:**
+
+- Delete all existing Partner Zones before upgrading
+- Upgrade Console and Gateway to the latest version
+- Recreate the Partner Zones with the same configuration
+
+### Conduktor Trust
+
+#### Regex library
+
+Added an option to **Show regex library** when creating a new rule in Console. This provides a list of pre-built regex examples that can be used to speed up rule creation.
+
+#### Mark action
+
+You can now toggle the **Mark action** on data quality Policies. When enabled, messages that violate the rule(s) are tagged with a special header.
+
+[Check out the Mark action use case.](/guide/use-cases/enforce-data-quality#mark-action)
+
+#### JSON schema rule type
+
+You can now create JSON schema rules to validate message structure and content.
+
+[Check out the JSON schema use case.](/guide/use-cases/enforce-data-quality#json-schema-rule)
+
+### Quality of life improvements
+
+You can now fine-tune Cortex and Prometheus retention with the new environment variables. We've also updated the default values to reduce disk usage.
+
+You can **patch** (instead of replacing) the YAML configuration. [Find out more about overriding the configuration with YAML](/guide/conduktor-in-production/deploy-artifacts/deploy-cortex#overriding-with-yaml).
+
+The Self-service experience has been improved with **updated terminology** for managing access requests.
+
+Ambiguous and inconsistent references to various terminology such as 'subscriptions', 'subscribing', 'access requests', 'sharing', 'requests', have been standardized throughout the application, placing emphasis on a single unified concept of **access request**.
+
+You can now view the Resource Policies in the Application details page, and the Consumer Group ownerships in the Application instance details page.
+
+The Trust Rules and Policies pages are now hidden for users without [Trust](https://conduktor.io/trust) in their license.
+
+### Fixes
+
+- Fixed production rate metrics getting stuck at high values when producer rates drop instantly to zero, which was causing artificially inflated metrics in systems with bursty production patterns.
+- Errors preventing users from logging in are now prominently displayed on the login page.
+- To prevent disclosure of password length in configuration forms, password fields are now consistently obfuscated regardless of the length of the actual password.
+- Secrets in AWS Glue and other cluster configuration forms are no longer shown in clear text.
+- Fixed error logs appearing when SQL features are not enabled, reducing unnecessary log noise.
+- Fixed onboarding page checkbox labels not being clickable, improving user experience during account setup.
+- Schema Registry naming strategies now include namespace in generated subject names.
+- Fixed issue where topic navigation tab was missing from main menu for certain user roles despite having proper permissions.
+- Self-service configuration now correctly handles multiple Kafka Connect clusters connected to a single application instance.
+- Duplicate users can no longer be created using the same email username but in different casing.
+- In the metadata of the records, the schema names are no longer truncated.
+- Add error messages on Connector failure, helping troubleshooting.
+- Fixed topic policies not being visible in application instances after upgrading from version 1.35 to 1.36.
+- Fixed "404 group does not exist" error incorrectly showing up when upgrading from 1.35 to version 1.36.
+- Deleting the Kafka Connect cluster now deletes the associated permissions, solving the permission errors on user and group GET operations.
+- Improved groups API performance, preventing timeouts for big organisations with thousands of users and groups.
+- Improved indexer performance, preventing timeouts for big organisations with thousands of consumer groups.
+- JVM metrics renamed in the Console and the Grafana dashboard, based on [Prometheus changes](https://prometheus.github.io/client_java/migration/simpleclient/#jvm-metrics).

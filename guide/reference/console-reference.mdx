@@ -24,6 +24,8 @@ spec:
   description: "Members of the Team A - Developers"
   externalGroups:
     - "LDAP-GRP-A-DEV"
+  externalGroupRegex:
+    - "LDAP*"
   members:
     - member1@company.org
     - member2@company.org
@@ -71,7 +73,9 @@ resource "conduktor_console_group_v2" "developers-a" {
 - `spec.description` is **optional**
 - `spec.externalGroups` is a list of LDAP or OIDC groups to sync with this Console Group
   - Members added this way will not appear in `spec.members` but `spec.membersFromExternalGroups` instead
-- `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups`
+- `spec.externalGroupRegex` is a list of regex patterns that can match to a series of LDAP or OIDC groups to sync with this Console group. Members added this way will not appear in `spec.members` list.
+  - Supports regex patterns for dynamic group matching (e.g., `^TEAM-.*` to match all groups starting with "TEAM-")
+- `spec.membersFromExternalGroups` is a **read-only** list of members added through `spec.externalGroups` or `spec.externalGroupRegex`
 - `spec.members` must be email addresses of members you wish to add to this group
 - `spec.permissions` are valid permissions as defined in [Permissions](#permissions)
 
@@ -781,6 +785,7 @@ spec:
     email: johndoe@partner.io
     phone: 07827 837 177
   cluster: cdk-gateway
+  underlyingCluster: cluster1
   authenticationMode:
     serviceAccount: partner-external-partner
     type: PLAIN
@@ -818,6 +823,8 @@ spec:
 - `spec.displayName` is mandatory.
 - `spec.description`, `spec.url` and `spec.partner` (optional), useful for context information.
 - `spec.cluster` has to be a valid Console cluster technical ID with the **Provider configured as *Gateway***.
+- `spec.underlyingCluster` has to be a valid Console cluster technical ID where the cluster has to be defined under the Gateway defined by the `spec.gatewayClusterId`.
+  - When not specified, the value is inferred to be equal to the `spec.gatewayClusterId` field, hence selecting the main cluster behind Gateway by default.
 - `spec.serviceAccount` has to be a local Gateway service account. It doesn't need to exist before creating the Partner Zone, the service account will be created automatically.
 - `topics[].name` is the name of the topic as it should appear to your external partner. This can be different from `backingTopic`.
 - `topics[].backingTopic` is the internal name of the topic that you want to share.

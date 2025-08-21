@@ -118,7 +118,7 @@ This requires you to handle load balancing manually, as you won't have the advan
 ## 3. Connect Gateway to Kafka
 
 <img 
-  src="/images/gateway-to-kafka-security.png" 
+  src="/images/gateway-to-kafka-security.png"
   alt="Gateway to Kafka security"
   width="200"
 />
@@ -144,11 +144,11 @@ For example, `bootstrap.servers` is set by the `KAFKA_BOOTSTRAP_SERVERS` environ
 
 ### Supported protocols
 
-You can use all the Kafka security protocols to authenticate Gateway to the Kafka cluster; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`.  
+You can use all the Kafka security protocols to authenticate Gateway to the Kafka cluster; `PLAINTEXT`, `SASL_PLAINTEXT`, `SASL_SSL` and `SSL`.
 
 These can be used with all SASL mechanisms supported by Apache Kafka: `PLAIN`, `SCRAM-SHA`, `OAuthBearer`, `Kerberos` etc. In addition, we support IAM authentication for AWS MSK clusters.
 
-In the following examples, we provide blocks of environment variables which can be provided to Gateway, e.g. in a docker-compose file, or a `helm` deployment. 
+In the following examples, we provide blocks of environment variables which can be provided to Gateway, e.g. in a docker-compose file, or a `helm` deployment.
 
 Information which should be customized is enclosed by `<` and `>`.
 
@@ -406,7 +406,7 @@ Gateway configuration:
 
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: SSL
-GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
@@ -434,7 +434,7 @@ Gateway configuration:
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: SSL
 GATEWAY_SSL_CLIENT_AUTH: REQUIRE
-GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 GATEWAY_SSL_TRUST_STORE_PATH: /path/to/your/truststore.jks
@@ -565,7 +565,7 @@ Token claims
 }
 ```
 
-##### OAuthbearer 
+##### OAuthbearer
 
 Oauthbearer uses a OAuth2/OIDC security provider to authenticate a token in Gateway. The Oauth credentials base is managed in the configured provider.
 
@@ -577,7 +577,7 @@ Gateway configuration:
 GATEWAY_SECURITY_PROTOCOL: SASL_PLAINTEXT
 GATEWAY_OAUTH_JWKS_URL: https://login.microsoftonline.com/common/discovery/keys
 GATEWAY_OAUTH_EXPECTED_ISSUER: https://sts.windows.net/xxxxxxxx-df00-48cd-805b-1ebe914e8b11/
-GATEWAY_OAUTH_EXPECTED_AUDIENCES: "[00000002-0000-0000-c000-000000000000]"    
+GATEWAY_OAUTH_EXPECTED_AUDIENCES: "[00000002-0000-0000-c000-000000000000]"
 ```
 
 Client configuration:
@@ -610,7 +610,7 @@ Gateway configuration:
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: SASL_SSL
 GATEWAY_USER_POOL_SECRET_KEY: yourRandom256bitKeyUsedToSignTokens
-GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
@@ -644,8 +644,8 @@ Gateway configuration:
 GATEWAY_SECURITY_PROTOCOL: SASL_SSL
 GATEWAY_OAUTH_JWKS_URL: https://login.microsoftonline.com/common/discovery/keys
 GATEWAY_OAUTH_EXPECTED_ISSUER: https://sts.windows.net/xxxxxxxx-df00-48cd-805b-1ebe914e8b11/
-GATEWAY_OAUTH_EXPECTED_AUDIENCES: "[00000002-0000-0000-c000-000000000000]"  
-GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_OAUTH_EXPECTED_AUDIENCES: "[00000002-0000-0000-c000-000000000000]"
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
@@ -715,7 +715,7 @@ Gateway configuration using PLAIN, as used for example on Confluent Cloud:
 
 ```yaml
 GATEWAY_SECURITY_PROTOCOL: DELEGATED_SASL_SSL
-GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks        
+GATEWAY_SSL_KEY_STORE_PATH: /path/to/your/keystore.jks
 GATEWAY_SSL_KEY_STORE_PASSWORD: yourKeystorePassword
 GATEWAY_SSL_KEY_PASSWORD: yourKeyPassword
 ```
@@ -841,7 +841,7 @@ This allows you to create multiple virtual clusters while maintaining a single p
 ![virtual clusters](/images/vclusters.png)
 
 <Info>
-Virtual Clusters are entirely optional. If you choose to not configure any, Conduktor Gateway will act as a transparent proxy for your backing Kafka Cluster. This is the default mode and all topics/resources will be visible and accessible as usual, without any additional configuration.  
+Virtual Clusters are entirely optional. If you choose to not configure any, Conduktor Gateway will act as a transparent proxy for your backing Kafka Cluster. This is the default mode and all topics/resources will be visible and accessible as usual, without any additional configuration.
 </Info>
 
 #### Virtual cluster benefits
@@ -864,19 +864,19 @@ In the example below, we assume a topic `order` has been created on Virtual Clus
 # Listing topics on Virtual Cluster vc-alice
 $ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-alice.properties --list
 orders
-# As expected, Alice sees its topic normally. 
+# As expected, Alice sees its topic normally.
 
 # Now let's check what happens if we list the topics with Bob
 $ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-bob.properties --list
 []
-# Bob doesn't see Alice's topics. 
+# Bob doesn't see Alice's topics.
 
 # Let's try to create the same topic for Bob
-$ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-bob.properties --create --topic orders 
+$ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-bob.properties --create --topic orders
 $ kafka-topics --bootstrap-server=gateway:6969 --command-config vc-bob.properties --list
 orders
 
-# If we contact directly the backing cluster instead of Gateway, 
+# If we contact directly the backing cluster instead of Gateway,
 # we can see both topics under a different name. This is the actual topic name on the Kafka cluster, which is observed when not interacting through Gateway.
 $ kafka-topics.sh --bootstrap-server=backing-kafka:9092  --list
 vc-alice.orders
@@ -1000,13 +1000,13 @@ During a failover event, Chargeback will only collect data for the original clus
 
 ## Configure Gateway for multi-clusters
 
-Gateway can be configured to communicate with multiple Kafka clusters and expose their topics to your partners. 
+Gateway can be configured to communicate with multiple Kafka clusters and expose their topics to your partners.
 
 - direct partners to a **single endpoint**
 - provide them with **access to topics in multiple Kafka clusters**
 - expose topics using **aliases** that can be different from topic names
 
-### 1. Configure Gateway
+### Configure Gateway
 
 To set up Gateway to support multi-clusters, you should:
 - configure one main cluster which will be used by Gateway to store its internal state
@@ -1077,7 +1077,13 @@ KAFKA_CLUSTERB_GATEWAY_ROLES: 'upstream' # Note: may be omitted as upstream is t
 </Tab>
 </Tabs>
 
-### 2. Create a partner virtual cluster
+### Partner Virtual Clusters
+
+The following steps are for setting up a partner virtual cluster manually. You can instead create a Partner Zone which supports multi-clusters that simplifies this process. Please see the [Create a Partner Zone](/guide/use-cases/third-party-data#create-a-partner-zone) guide.
+
+The [Create Partner Zones using multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster.mdx) tutorial page may additionally be helpful.
+
+#### 1. Create a partner virtual cluster
 
 First, create a new partner virtual cluster.
 
@@ -1136,7 +1142,7 @@ curl \
 </Tab>
 </Tabs>
 
-### 3. Alias your topics
+#### 2. Alias your topics
 
 Finally, create aliases for existing topics in the partner virtual cluster.
 
@@ -1220,7 +1226,7 @@ curl \
 </Tab>
 </Tabs>
 
-### 4. Create service accounts
+#### 3. Create service accounts
 
 Once the virtual cluster is created and contains the topics to expose to your partners, you'll need to create service accounts and configure ACLs (Access Control Lists).
 
@@ -1354,7 +1360,7 @@ sasl.mechanism=PLAIN
 sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="partner-user" password="$PARTNER-USER-PASSWORD";
 ```
 
-### 5. Create ACLs for the service accounts
+#### 4. Create ACLs for the service accounts
 
 Before creating ACLs, you need to know how to reach this partner virtual cluster.
 
@@ -1411,7 +1417,7 @@ kafka-acls --bootstrap-server <partner_virtual_cluster_bootstrap_address> \
   --topic topic1
 ```
 
-### 6. Test partner virtual cluster access
+#### 5. Test partner virtual cluster access
 
 Now that the partner user has the correct ACLs, you can use their credentials to interact with the alias topics and verify that the permissions are correctly set.
 

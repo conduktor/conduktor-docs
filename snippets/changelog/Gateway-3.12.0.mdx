@@ -1,0 +1,79 @@
+---
+title: Gateway 3.12.0
+---
+
+
+- [Breaking changes](#breaking-changes)
+  - [New APIs for health and versions](#new-apis-for-health-and-versions)
+  - [Rename of the Virtual Cluster Id](#rename-of-virtual-cluster-id)
+- [New features](#new-features)
+  - [New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable](#new-gateway_audit_log_event_types-environment-variable)
+  - [Enhanced crypto shredding behavior for decryption](#enhanced-crypto-shredding-behavior-for-decryption)
+  - [Client throttling for encryption and decryption](#client-throttling-for-encryption-and-decryption)
+- [Fixes](#fixes)
+  
+
+### Breaking changes
+
+#### New APIs for health and versions
+
+To improve the reliability and monitoring of the Gateway service, we've introduced new API endpoints for health checks and version information.
+
+These changes align our service with Kubernetes health check standards and will provide a more robust way to monitor Gateway's status.
+
+[Find out more from the monitoring reference](/guide/conduktor-in-production/monitor/index#liveness-endpoint).
+
+<Warning>
+The old */health* API is now deprecated but it will continue to function. 
+
+Please update your configuration to use the new liveness and readiness probe endpoints.
+</Warning>
+
+#### Rename of Virtual Cluster Id
+
+When a Kafka client requests the cluster Id of a Virtual Cluster through Gateway, the returned cluster Id will be different - it will be renamed.
+
+Previously, the returned cluster Id was the native Kafka cluster Id of the Virtual Cluster's physical cluster.
+
+The new cluster Id that's returned will be be in the form of: `{virtual-cluster-name}@{physical-cluster-id}`.
+
+
+### New features
+
+#### New `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable
+
+This release introduces the `GATEWAY_AUDIT_LOG_EVENT_TYPES` environment variable which controls the types of events recorded in the audit log.
+
+It provides flexibility to enable/disable specific event types, such as `CONNECTION`. 
+
+[See the full list and explanations of the event types](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/env-variables#audit).
+
+This change is backwards compatible, as the default value is `ALL` (which means that all event types are logged by default).
+
+#### Enhanced crypto shredding behavior for decryption
+The decryption Interceptor now includes improved error handling behavior specifically for crypto shredding scenarios.
+
+A new `crypto_shred_safe_fail_fetch` error policy has been introduced. It returns encrypted data when decryption fails due to missing encryption keys, but throws exceptions for other types of decryption failures (e.g., authentication errors). This ensures that crypto-shredded data remains protected while still failing fast for other issues that require attention.
+
+#### Client throttling for encryption and decryption
+
+Gateway now supports client throttling when encryption or decryption operations fail, helping to protect your system from being overwhelmed during error conditions.
+
+- **New throttleTimeMs configuration**: Set `throttleTimeMs` to control how long clients will be throttled when encryption/decryption fails (in milliseconds, default: 0)
+- **Automatic system protection**: When encryption or decryption fails, Gateway can automatically throttle the problematic client for the specified duration, preventing system overload
+- **Configurable behavior**: You can enable and adjust throttling based on your system's needs and error tolerance
+
+[Find out more about encryption and decryption configurations](/gateway/interceptors/data-security/encryption/).
+
+
+### Fixes
+
+- `KUBERNETES` Vault authentication now gets the JWT from the default Vault location (`/var/run/secrets/kubernetes.io/serviceaccount/token`). You can configure this location using `path` (`VAULT_KUBERNETES_PATH`). The `jwt` configuration key is no longer needed. See **Kubernetes authentication** under [Vault authentication types](/guide/reference/interceptor-reference#vault-kms).
+
+- Enriched the `REST_API` audit log events with the request body, which was previously not captured.
+
+- Resolved `GATEWAY_TOPIC_STORE_KCACHE_REPLICATION_FACTOR` configuration to properly default to the Kafka cluster's default replication factor settings.
+
+- Supported Protobuf schemas for `SchemaPayloadValidationPolicyPlugin`.
+
+- Updated SSL handshake failure logging to include client IP addresses, which were previously missing from error logs, helping identify which applications are affected by certificate issues.

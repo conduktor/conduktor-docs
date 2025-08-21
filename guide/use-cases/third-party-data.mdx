@@ -20,8 +20,8 @@ Partner Zones allow you to share Kafka topics with external partners selectively
 
 Before creating a Partner Zone, you have to:
 
-- use **Conduktor Console 1.36.0** or later
-- use **Conduktor Gateway 3.11.0** or later with the following configurations:
+- use **Conduktor Console 1.37.0** or later
+- use **Conduktor Gateway 3.12.0** or later with the following configurations:
   - `GATEWAY_SECURITY_PROTOCOL` set to `SSL`, `SASL_SSL`, or `SASL_PLAINTEXT`
   - `GATEWAY_SECURITY_MODE` set to `GATEWAY_MANAGED`
   - `GATEWAY_USER_POOL_SERVICE_ACCOUNT_REQUIRED` set to `true`
@@ -31,7 +31,7 @@ Before creating a Partner Zone, you have to:
 - in Console, [configure your Gateway cluster](/guide/conduktor-in-production/admin/configure-clusters) and fill in the **Provider** tab with Gateway API credentials
 
 <Warning>
-As of v1.36.0, Partner Zones have the following limitations:
+Partner Zones currently have the following limitations:
 
 - Passwords do not expire. If you need **to revoke access** to your partner, you will have to delete the Partner Zone.
 </Warning>
@@ -52,7 +52,9 @@ Use the Console UI to create a Partner Zone in just a few steps.
    - (Optional) Enter a relevant **URL** for your partner.
    - (Optional) Enter a **Description** to explain your reasons/requirements for sharing data.
    - (Optional) Specify contact details of the beneficiary/recipient of this Partner Zone.
-   - **Select Gateway** to choose the one you want to use and click **Continue**.
+   - **Select Gateway** to choose the one you want to use, then select an available cluster under the Gateway and click **Continue**.
+     - [Find out how to configure Gateway for multiple clusters](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters).
+     - Only clusters that have also been configured in Console will be available to select. See the [Partner Zone multi-cluster tutorial](/guide/tutorials/partner-zone-multi-cluster#configure-the-underlying-kafka-clusters-in-console) on how to configure the underlying clusters in Console.
 1. Choose what and how to share:
    - **Select the Kafka topics** to include in this Partner Zone, you can filter topics by custom labels you've defined or search for topic name.
    - **Select Read/Write**. By default, any topics that are shared, will be shared with **Read**-only access, but you can additionally allow **Write** access.
@@ -92,11 +94,12 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
     metadata:
         name: external-partner-zone
     spec:
-        cluster: partner1
+        cluster: gateway-1
+        underlyingCluster: kafka-cluster-1
         displayName: External Partner Zone
         url: https://partner1.com
         authenticationMode:
-            serviceAccount: partner-external-partner
+            serviceAccount: external-partner-service-account
             type: PLAIN
         topics:
         - name: topic-a
@@ -112,6 +115,14 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
           phone: 07827 837 177
     ```
 
+* The `cluster` field corresponds to the technical ID of the Gateway.
+* Use `underlyingCluster` to target an upstream physical cluster in a [multi-cluster configured](/guide/conduktor-in-production/deploy-artifacts/deploy-gateway/index#configure-gateway-for-multi-clusters) Gateway. The upstream cluster also needs to be configured in the Console and the technical ID from that configuration will populate this field.
+
+<Info>
+`underlyingCluster` is optional. When not set the main physical cluster on the Gateway is used.
+</Info>
+
+
 1. Use [Conduktor CLI](/guide/conduktor-in-production/automate/cli-automation) to apply the configuration:
 
     ```bash
@@ -126,15 +137,16 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
     apiVersion: v2
     kind: PartnerZone
     metadata:
-        name: john-partner-zone
+        name: external-partner-zone
         id: 332b30cd-7bda-4659-b1c1-39986986f0bd
         updatedAt: "2025-01-27T12:55:05.387368Z"
         status: PENDING
     spec:
-        cluster: partner1
-        displayName: Johns partner zone
+        cluster: gateway-1
+        underlyingCluster: kafka-cluster-1
+        displayName: External Partner Zone
         url: https://partner1.com
-        serviceAccount: johndoe
+        serviceAccount: external-partner-service-account
         topics:
             - name: topic-a
               backingTopic: kafka-topic-a
@@ -167,7 +179,7 @@ You can also use the [Conduktor CLI (Command Line Interface)](/guide/conduktor-i
     ```bash
     security.protocol=SASL_PLAINTEXT
     sasl.mechanism=PLAIN
-    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=johndoe password=${SERVICE_ACCOUNT_PASSWORD};
+    sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username=external-partner-service-account password=${SERVICE_ACCOUNT_PASSWORD};
     ```
 
 1. Finally, use CLI to list the topics of the Partner Zone:
@@ -301,4 +313,5 @@ Deleting a Partner Zone will remove a partner's access to it. *This can't be und
 - [Connect to clusters](/guide/conduktor-in-production/admin/configure-clusters)
 - [Manage service accounts](/guide/manage-kafka/kafka-resources/service-accounts-acls)
 - [Find out more about Gateway service accounts](/guide/conduktor-concepts/gw-service-accounts)
+- [Create Partner Zones with multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster)
 - [Give us feedback/request a feature](https://conduktor.io/roadmap)
