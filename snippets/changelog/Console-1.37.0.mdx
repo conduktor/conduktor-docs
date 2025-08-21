@@ -2,8 +2,11 @@
 title: Console 1.37
 ---
 
-_Release date: 2025-08-20_
+_Release date: 2025-08-21_
 
+- [Breaking changes](#breaking-changes)
+  - [Gateway 3.12 dependency](gateway-3.12-dependency)
+  - [Email address storage](email-address-storage)
 - [Conduktor Scale](#conduktor-scale)
   - [Application Groups management](#application-groups-management)
   - [Application Instance resources](#application-instance-resources)
@@ -17,17 +20,20 @@ _Release date: 2025-08-20_
 - [Conduktor Trust](#conduktor-trust)
   - [Regex library](#regex-library)
   - [Mark action](#mark-action)
+  - [Data quality rule breaking change](#data-quality-rule-breaking-change)
   - [JSON schema Rule type](#json-schema-rule-type)
 - [Quality of life improvements](#quality-of-life-improvements)
 - [Fixes](#fixes)
 
-### Breaking change: email address storage
-In this release, we have made a change to how we store the email addresses of users in Console.
-All emails are now stored in lowercase to ensure consistency and prevent issues with SSO or RBAC.
-We highly recommend that you back up your Console database before upgrading to this version.
-If two users have the same email address but with different cases, the migration will fail.
-In this case, we recommend that you resolve the conflict by either deleting one of the users or changing their email address before upgrading.
+### Breaking changes
 
+#### Gateway 3.12 dependency
+
+Starting from Console 1.37, Conduktor Trust [Mark action](#mark-action) and Conduktor Exchange [Partner Zone](#partner-zone-breaking-change) functionality will require Gateway 3.12 or later.
+
+#### Email address storage
+
+In this release, we have made a change to how we store the email addresses of users in Console. All emails are now stored in lowercase to ensure consistency and prevent issues with SSO or RBAC. We highly recommend that you back up your Console database before upgrading to this version. If two users have the same email address but with different cases, the migration will fail. In this case, we recommend that you resolve the conflict by either deleting one of the users or changing their email address before upgrading.
 
 ### Conduktor Scale
 
@@ -65,7 +71,7 @@ Console now supports creating Partner Zones against a multi-clustered Gateway co
 
 #### Partner Zone breaking change
 
-With the support for multi-cluster Gateway, all existing Partner Zones created prior to this version of Console are incompatible and cannot be migrated or updated to support the new capability. Hence, existing Partner Zones will stop functioning after the upgrade if not recreated.
+With the support for multi-cluster Gateway in 3.12, all existing Partner Zones created prior to this version of Console are incompatible and cannot be migrated or updated to support the new capability. Hence, existing Partner Zones will stop functioning after the upgrade if not recreated.
 
 **Action required:**
 
@@ -85,6 +91,10 @@ You can now toggle the **Mark action** on data quality Policies. When enabled, m
 
 [Check out the Mark action use case.](/guide/use-cases/enforce-data-quality#mark-action)
 
+#### Data quality rule breaking change
+
+With the introduction of **Mark action** the `/public/data-quality/v1/data-quality-rule` has a breaking change on `PUT` where it now needs `mark` data passed in the payload. See [API documentation](https://developers.conduktor.io/?product=console&version=1.37.0#tag/cli_data-quality-rule_data-quality_v1_17/operation/list-data-quality-rule-resources) for details.
+
 #### JSON schema rule type
 
 You can now create JSON schema rules to validate message structure and content.
@@ -103,9 +113,25 @@ Ambiguous and inconsistent references to various terminology such as 'subscripti
 
 You can now view the Resource Policies in the Application details page, and the Consumer Group ownerships in the Application instance details page.
 
+The Trust Rules and Policies pages are now hidden for users without [Trust](https://conduktor.io/trust) in their license.
+
 ### Fixes
 
 - Fixed production rate metrics getting stuck at high values when producer rates drop instantly to zero, which was causing artificially inflated metrics in systems with bursty production patterns.
 - Errors preventing users from logging in are now prominently displayed on the login page.
-- The Trust Rules and Policies pages are now hidden for users without [Trust](https://conduktor.io/trust) in their license.
-- Kafka Cluster configuration for SSL passwords no longer displays length unless editing the field, and AWS Glue secrets are no longer clear text.
+- To prevent disclosure of password length in configuration forms, password fields are now consistently obfuscated regardless of the length of the actual password.
+- Secrets in AWS Glue and other cluster configuration forms are no longer shown in clear text.
+- Fixed error logs appearing when SQL features are not enabled, reducing unnecessary log noise.
+- Fixed onboarding page checkbox labels not being clickable, improving user experience during account setup.
+- Schema Registry naming strategies now include namespace in generated subject names.
+- Fixed issue where topic navigation tab was missing from main menu for certain user roles despite having proper permissions.
+- Self-service configuration now correctly handles multiple Kafka Connect clusters connected to a single application instance.
+- Duplicate users can no longer be created using the same email username but in different casing.
+- In the metadata of the records, the schema names are no longer truncated.
+- Add error messages on Connector failure, helping troubleshooting.
+- Fixed topic policies not being visible in application instances after upgrading from version 1.35 to 1.36.
+- Fixed "404 group does not exist" error incorrectly showing up when upgrading from 1.35 to version 1.36.
+- Deleting the Kafka Connect cluster now deletes the associated permissions, solving the permission errors on user and group GET operations.
+- Improved groups API performance, preventing timeouts for big organisations with thousands of users and groups.
+- Improved indexer performance, preventing timeouts for big organisations with thousands of consumer groups.
+- JVM metrics renamed in the Console and the Grafana dashboard, based on [Prometheus changes](https://prometheus.github.io/client_java/migration/simpleclient/#jvm-metrics).
