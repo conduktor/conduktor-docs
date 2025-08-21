@@ -67,7 +67,7 @@ Partner Zones are now generally available and out of preview. This means that al
 
 Console now supports creating Partner Zones against a multi-clustered Gateway configuration. This allows for a Partner Zone to be created against any of the configured Kafka clusters behind Gateway (previously, a Gateway was required per Kafka cluster for a Partner Zone).
 
-[Check out the tutorial on creating Partner Zones with multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster).
+[Check out the tutorial on creating Partner Zones with multi-cluster Gateway](/guide/tutorials/partner-zone-multi-cluster), as well as the [console resources for Partner Zones](/guide/reference/console-reference#partner-zones).
 
 #### Partner Zone breaking change
 
@@ -76,8 +76,8 @@ With the support for multi-cluster Gateway in 3.12, all existing Partner Zones c
 **Action required:**
 
 - Delete all existing Partner Zones before upgrading
-- Upgrade to the latest version
-- Recreate your Partner Zones with the new configuration
+- Upgrade Console and Gateway to the latest version
+- Recreate the Partner Zones with the same configuration
 
 ### Conduktor Trust
 
