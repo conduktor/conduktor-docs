@@ -732,11 +732,11 @@ For enhanced security, you can hide the sensitive values using [environment vari
 | **Kubernetes authentication**      |        | Use Kubernetes authentication.                                         |
 | `type`                             | String | **Must be `KUBERNETES`.** Indicates the type of authentication.        |
 | `role`                             | String | Kubernetes role.                                                       |
-| `jwt`                              | String | Kubernetes JWT token.                                                  |
+| `path`                             | String | (Optional) Token file path for the Kubernetes auth method.             |
 | _**Managed identity**_             |        | Load authentication information from the below environment variables.  |
 | `VAULT_AUTH_TYPE`                  | String | **Must be `KUBERNETES`.** Indicates the type of authentication.        |
 | `VAULT_KUBERNETES_ROLE`            |        | Kubernetes role.                                                       |
-| `VAULT_KUBERNETES_JWT`             |        | Kubernetes JWT token.                                                  |
+| `VAULT_KUBERNETES_PATH`            |        | (Optional) Token file path for the Kubernetes auth method.             |
 | **GCP authentication**             |        | Use Google Cloud Platform authentication.                              |
 | `type`                             | String | **Must be `GCP`.** Indicates the type of authentication.               |
 | `role`                             | String | GCP role for authentication.                                           |
