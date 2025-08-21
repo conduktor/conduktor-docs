@@ -392,11 +392,8 @@ The Self-service service account is not configured by the central team at the `A
 Instead, the central platform team decides to delegate this responsibility to the application team, which needs to declare their own service account(s) and associated ACLs within the limits of what the `ApplicationInstance` is allowed to do.
 
 - **API key(s):** AppToken
-- **Managed with:** API, CLI, TF
+- **Managed with:** API, CLI
 - **Labels support:** Missing
-
-<Tabs>
-<Tab title="CLI">
 
 ```yaml
 ---
@@ -427,46 +424,6 @@ spec:
         operations:
           - Read
 ```
-
-</Tab>
-<Tab title="Terraform">
-
-```hcl
-resource "conduktor_console_service_account_v1" "clickstream-sa" {
-  name         = "clickstream-sa"
-  cluster      = "shadow-it"
-  app_instance = "clickstream-app-dev"
-  spec = {
-    authorization = {
-      kafka = {
-        acls = [
-          {
-            type         = "TOPIC"
-            name         = "click.event-stream.avro"
-            pattern_type = "PREFIXED"
-            operations   = ["Write", "Read"]
-          },
-          {
-            type         = "CLUSTER"
-            name         = "kafka-cluster"
-            pattern_type = "LITERAL"
-            operations   = ["DescribeConfigs"]
-          },
-          {
-            type         = "CONSUMER_GROUP"
-            name         = "cg-name"
-            pattern_type = "LITERAL"
-            operations   = ["Read"]
-          }
-        ]
-      }
-    }
-  }
-}
-```
-
-</Tab>
-</Tabs>
 
 **Service account checks:**
 The checks are the same as the [service account](/guide/reference/kafka-reference/#service-account) resource with additional **limitations**:

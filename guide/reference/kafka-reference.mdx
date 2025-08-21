@@ -150,11 +150,8 @@ spec:
 Creates a connector on a Kafka Connect cluster.
 
 - **API key(s):** AdminToken, AppToken
-- **Managed with:** API, CLI, UI, TF
+- **Managed with:** API, CLI, UI
 - **Labels support:** Partial
-
-<Tabs>
-<Tab title="CLI">
 
 ```yaml
 ---
@@ -177,36 +174,6 @@ spec:
     connection.url: "jdbc:mysql://127.0.0.1:3306/sample?verifyServerCertificate=false&useSSL=true&requireSSL=true"
     consumer.override.sasl.jaas.config: o.a.k.s.s.ScramLoginModule required username="<user>" password="<password>";
 ```
-
-</Tab>
-<Tab title="Terraform">
-
-```hcl
-resource "conduktor_console_connector_v2" "click-my-connector" {
-  name            = "click.my-connector"
-  cluster         = "prod-cluster"
-  connect_cluster = "kafka-connect-cluster"
-  labels = {
-    domain = "clickstream"
-  }
-  auto_restart = {
-    enabled           = true
-    frequency_seconds = 600
-  }
-  spec = {
-    config = {
-      "connector.class"  = "io.connect.jdbc.JdbcSourceConnector"
-      "tasks.max"        = "1"
-      "topic"            = "click.pageviews"
-      "connection.url"   = "jdbc:mysql://127.0.0.1:3306/sample?verifyServerCertificate=false&useSSL=true&requireSSL=true"
-      "consumer.override.sasl.jaas.config" = "o.a.k.s.s.ScramLoginModule required username=\"<user>\" password=\"<password>\";"
-    }
-  }
-}
-```
-
-</Tab>
-</Tabs>
 
 **Connector checks:**
 
