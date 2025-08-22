@@ -217,24 +217,35 @@ Optional local accounts list, used to log into Console.
 
 ## Monitoring properties
 
-Cortex is pre-configured to run with Console. It's a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
+We provide a pre-configured monitoring solution based on Cortex (`conduktor/conduktor-console-cortex`). It's a custom implementation of Prometheus used in several production systems including Amazon Managed Service for Prometheus (AMP).
 
-You can choose to not deploy the Cortex image (`conduktor/conduktor-console-cortex`). Hoewever, you will then not be able to see the monitoring graphs or configure alerts.
+You can choose to use your own solution via the `monitoring.backend` property. We support Cortex, Mimir and Prometheus.
 
-First, we need to configure Console to connect to Cortex services. By default these are Cortex ports:
+You can also choose to not deploy any monitoring solution. However, you will then not be able to see the monitoring graphs or configure alerts.
 
-- Query port **9009**
-- Alert manager port **9010**
+Depending on the chosen solution, you will need to provide the corresponding URL and other properties. The mandatory column indicates whether the property is required for the chosen backend.
+For example, if you choose `mimir`, you must provide the `monitoring.mimir-url` property, but if you choose `conduktor`, you must provide the `monitoring.cortex-url` property.
 
-| Property                                | Description                                                          | Environment variable                     | Mandatory | Type   | Default |
-|-----------------------------------------|----------------------------------------------------------------------|------------------------------------------|-----------|--------|---------|
-| `monitoring.cortex-url`                 | Cortex Search Query URL with port 9009                               | `CDK_MONITORING_CORTEXURL`               | true      | string | ∅       |
-| `monitoring.alert-manager-url`          | Cortex Alert Manager URL with port 9010                              | `CDK_MONITORING_ALERTMANAGERURL`         | true      | string | ∅       |
-| `monitoring.callback-url`               | Console API                                                          | `CDK_MONITORING_CALLBACKURL`             | true      | string | ∅       |
-| `monitoring.notifications-callback-url` | Where the Slack notification should redirect                         | `CDK_MONITORING_NOTIFICATIONCALLBACKURL` | true      | string | ∅       |
-| `monitoring.clusters-refresh-interval`  | Refresh rate in seconds for metrics                                  | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`  | false     | int    | `60`    |
-| `monitoring.use-aggregated-metrics`         | Defines whether use the new aggregated metrics in the Console graphs | `CDK_MONITORING_USEAGGREGATEDMETRICS`      | No        | Boolean | `false` |
-| `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                  | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS` | No        | Boolean | `true`  |
+In case you do not provide an alert manager URL, the Console will use its built-in alert system.
+
+| Property                                    | Description                                                                                        | Environment variable                         | Mandatory                                       | Type                                                        | Default       |
+|---------------------------------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------|-------------------------------------------------|-------------------------------------------------------------|---------------|
+| `monitoring.backend`                        | Type of monitoring solution installed                                                              | `CDK_MONITORING_BACKEND`                     | false                                           | string one of: `conduktor`, `cortex`, `mimir`, `prometheus` | `conduktor`   |
+| `monitoring.cortex-url`                     | Cortex Search Query URL (default port is 9009 for `conduktor` backend)                             | `CDK_MONITORING_CORTEXURL`                   | if backend is `conduktor` or `cortex`           | string                                                      | ∅             |
+| `monitoring.mimir-url`                      | Mimir URL                                                                                          | `CDK_MONITORING_MIMIRURL`                    | if backend is `mimir`                           | string                                                      | ∅             |
+| `monitoring.prometheus-url`                 | Prometheus URL                                                                                     | `CDK_MONITORING_PROMETHEUSURL`               | if backend is `prometheus`                      | string                                                      | ∅             |
+| `monitoring.prometheus-http-prefix`         | Path to prometheus API for Cortex and Mimir                                                        | `CDK_MONITORING_PROMETHEUSHTTPPREFIX`        | false                                           | string                                                      | `/prometheus` |
+| `monitoring.tenant-id`                      | Value of the X-Scope-OrgId header to authenticate to Cortex or Mimir when multi-tenancy is enabled | `CDK_MONITORING_TENANTID`                    | false                                           | string                                                      | ∅             |
+| `monitoring.alert-manager-url`              | Alert Manager URL (default port is 9010 for `conduktor` backend)                                   | `CDK_MONITORING_ALERTMANAGERURL`             | false                                           | string                                                      | ∅             |
+| `monitoring.callback-url`                   | Console API                                                                                        | `CDK_MONITORING_CALLBACKURL`                 | if `monitoring.alert-manager-url` is configured | string                                                      | ∅             |
+| `monitoring.rules-namespace`                | Namespace for rules configured in Prometheus                                                       | `CDK_MONITORING_RULESNAMESPACE`              | false                                           | string                                                      | `conduktor`   |
+| `monitoring.notifications-callback-url`     | Where the Slack notification should redirect                                                       | `CDK_MONITORING_NOTIFICATIONCALLBACKURL`     | true                                            | string                                                      | ∅             |
+| `monitoring.clusters-refresh-interval`      | Refresh rate in seconds for metrics                                                                | `CDK_MONITORING_CLUSTERREFRESHINTERVAL`      | false                                           | int                                                         | `60`          |
+| `monitoring.use-aggregated-metrics`         | Defines whether use the new aggregated metrics in the Console graphs                               | `CDK_MONITORING_USEAGGREGATEDMETRICS`        | No                                              | Boolean                                                     | `false`       |
+| `monitoring.enable-non-aggregated-metrics`  | Toggles the collection of obsolete granular metrics                                                | `CDK_MONITORING_ENABLENONAGGREGATEDMETRICS`  | No                                              | Boolean                                                     | `true`        |
+| `monitoring.repeat-alert-frequency-minutes` | Frequency in minutes of the repetition of firing alerts (builtin alert system)                     | `CDK_MONITORING_REPEATALERTFREQUENCYMINUTES` | No                                              | int                                                         | `60`          |
+| `monitoring.check-alert-frequency-minutes`  | Frequency in minutes of the verification of alert status (builtin alert system)                    | `CDK_MONITORING_CHECKALERTFREQUENCYMINUTES`  | No                                              | int                                                         | `1`           |
+| `monitoring.check-alert-parallelism`        | How many alerts are verified in parallel (builtin alert system)                                    | `CDK_MONITORING_CHECKALERTPARALLELISM`       | No                                              | int                                                         | `5`           |
 
 <Info>
 `monitoring.use-aggregated-metrics` and `monitoring.enable-non-aggregated-metrics` are temporary flags to help you transition to the new metrics collection system. They will be removed in a future release.

@@ -50,7 +50,8 @@
             {   
              "group": "Deploy Cortex",
              "pages": [
-                    "guide/conduktor-in-production/deploy-artifacts/deploy-cortex"
+                    "guide/conduktor-in-production/deploy-artifacts/deploy-cortex",
+                    "guide/conduktor-in-production/deploy-artifacts/deploy-external-monitoring"
                   ]
                 },
           {

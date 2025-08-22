@@ -1,0 +1,111 @@
+---
+title: Deploy Console with external monitoring
+---
+
+Console 1.38 added support for external monitoring solutions including Cortex, Mimir, and Prometheus.
+When using external monitoring solutions, Console connects to your existing monitoring infrastructure instead of deploying the bundled `console-cortex` artifact.
+
+For a complete reference of all monitoring-related environment variables, see [Console environment variables](/guide/conduktor-in-production/deploy-artifacts/deploy-console/env-variables#console-properties-reference).
+
+## Configuration
+
+### Metrics collection
+
+Your external monitoring solution must be configured to scrape Console metrics from the `/api/monitoring/metrics` endpoint.
+
+Example Prometheus scrape configuration:
+
+```yaml
+scrape_configs:
+- job_name: 'conduktor-console'
+  scheme: http
+  metrics_path: '/api/monitoring/metrics'
+  static_configs:
+    - targets: ['conduktor-console:8080']
+```
+
+### Multi-tenancy support
+
+If your Cortex or Mimir instance has multi-tenancy enabled, you can configure the tenant ID using:
+```yaml
+environment:
+  CDK_MONITORING_TENANT-ID: "your-tenant-id"
+```
+
+This sets the `X-Scope-OrgId` header for authentication.
+
+### Alerting system
+If you configure a Cortex or Mimir integration, you can also set up Alertmanager to manage Console alerts. Without Alertmanager, Console will use its own built-in alerting system.
+Because Prometheus does not support configuration of alert rules via API, Console will always use its own built-in alerting system when using Prometheus as the monitoring backend.
+
+When configuring Alertmanager, Console will *override* the Alertmanager configuration. If you share the same Alertmanager instance with other applications, you must ensure that multi-tenancy is enabled and that Console has a dedicated tenant.
+
+
+## Configuration examples
+
+### Cortex
+
+```yaml
+services:
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - "8080:8080"
+    environment:
+      # Connect to external Cortex instance
+      CDK_MONITORING_BACKEND: "cortex"
+      CDK_MONITORING_CORTEX-URL: https://cortex.your-domain.com:9009/
+      CDK_MONITORING_TENANT-ID: "conduktor" # Optional: Set tenant ID for multi-tenancy
+      CDK_MONITORING_ALERT-MANAGER-URL: https://alertmanager.your-domain.com:9093/
+      CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
+      CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://conduktor-console:8080
+      # Other Console configuration...
+```
+
+### Mimir
+
+```yaml
+services:
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - "8080:8080"
+    environment:
+      # Connect to external Mimir instance
+      CDK_MONITORING_BACKEND: "mimir"
+      CDK_MONITORING_MIMIR-URL: https://mimir.your-domain.com:9009/
+      CDK_MONITORING_TENANT-ID: "conduktor" # Optional: Set tenant ID for multi-tenancy
+      CDK_MONITORING_ALERT-MANAGER-URL: https://alertmanager.your-domain.com:9093/
+      CDK_MONITORING_CALLBACK-URL: http://conduktor-console:8080/monitoring/api/
+      CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://conduktor-console:8080
+      # Other Console configuration...
+```
+
+### Prometheus
+
+```yaml
+services:
+  conduktor-console:
+    image: conduktor/conduktor-console
+    ports:
+      - "8080:8080"
+    environment:
+      # Connect to external Prometheus instance
+      CDK_MONITORING_BACKEND: "prometheus"
+      CDK_MONITORING_PROMETHEUS-URL: https://prometheus.your-domain.com:9090/
+      CDK_MONITORING_NOTIFICATIONS-CALLBACK-URL: http://conduktor-console:8080
+      # Other Console configuration...
+```
+
+## Troubleshooting
+
+### Monitoring debug page
+
+Console provides a dedicated troubleshooting page for administrators to diagnose monitoring connectivity issues. Access this page at: `/settings/debug/monitoring`
+
+This debug page shows:
+- Connectivity status to your monitoring solution
+- Current configuration settings
+- Metrics collection statistics
+
+![Monitoring debug page](/images/monitoring-debug-page.png)
